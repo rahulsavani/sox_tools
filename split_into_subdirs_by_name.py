@@ -21,7 +21,7 @@ def extract_bpm_from_fname(fname):
         tmp1 = found.group(0)
         tmp2 = tmp1.replace('bpm.wav','')
         tmp2 = tmp2.replace('_','')
-        tmp2 = '%03d' % int(tmp2)
+        tmp2 = '%03.2f' % float(tmp2)
         return tmp2
 
 if __name__ == '__main__':
@@ -32,7 +32,8 @@ if __name__ == '__main__':
     target_dir = args.target_dir 
 
     # Example fname with bpm: InTheAir_Dry_keyFmin_70bpm.wav
-    regex = re.compile('_[0-9]+bpm\.wav')
+    # regex = re.compile('_[0-9]+bpm\.wav')
+    regex = re.compile('_[0-9.]+bpm\.wav')
 
     for src_full_path in glob.glob(target_dir + '/*.wav'):
 
