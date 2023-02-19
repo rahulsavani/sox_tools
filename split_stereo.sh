@@ -5,3 +5,7 @@ for i in `ls TMP/*.wav`; do
     # since that will work even if the wav is already mono
     sox $i -r 44100 -b 16 `basename $i` remix 1 norm -0.1
 done
+
+for i in `ls TMP2/*.aif`; do
+    sox $i -r 44100 -b 16 `basename $i`.wav remix 1 norm -0.1
+done
