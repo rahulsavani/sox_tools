@@ -98,7 +98,8 @@ if __name__ == '__main__':
     parser.add_argument('--target_dir', '-d', required=True)
     parser.add_argument('--type', '-t', required=True, choices=['folder_name', 'found_length'])
     parser.add_argument('--nbars', '-n')
-    parser.add_argument('--bpm', '-b', required=True, choices=['140','170'])
+    parser.add_argument('--bpm', '-b', required=True, choices=['70', '85', '140','170'])
+    parser.add_argument('--n_fields_to_drop', '-nb', default=0)
 
     args = parser.parse_args()
     target_dir = args.target_dir 
@@ -109,6 +110,8 @@ if __name__ == '__main__':
     if TYPE == 'found_length':
         assert args.nbars is not None
 
+    n_fields_to_drop = int(args.n_fields_to_drop)
+    # n_fields_to_drop = 2 # drop e.g., _150bpm with value 1, _Aminor_150bpm with 2
 
     # start index is needed when one overrides the files names
     # START_INDEX = 1
@@ -118,9 +121,6 @@ if __name__ == '__main__':
     # sdir = '%dbar' % n_bars
 
     if TYPE == 'folder_name':
-
-        n_fields_to_drop = 1
-        # n_fields_to_drop = 2 # drop e.g., _150bpm with value 1, _Aminor_150bpm with 2
 
         # Assumes current working directory
         cwd = os.getcwd()
@@ -148,7 +148,6 @@ if __name__ == '__main__':
 
         sdir = args.target_dir
         n_bars = int(args.nbars)
-        n_fields_to_drop = 0
 
         for i, name in enumerate(glob.glob('%s/*.wav' % sdir)):
             process_found_length(n_bars, name, i)
