@@ -1,5 +1,5 @@
-#bitdepth=16
-bitdepth=24
+bitdepth=16
+#bitdepth=24
 # loop through wav files in TMP
 # return mono file, normalised to -0.1 db
 for i in `ls TMP/*.wav`; do
