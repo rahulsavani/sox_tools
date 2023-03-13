@@ -3,7 +3,11 @@
 """
 Script for case where (a subset of) samples in a folder have their bpm in the filename
 
-The script uses a regex to put files into corresponding bpm (or 'NO_BPM') subdirs
+The script supports a couple of different approaches
+
+- one option uses a regex to put files into corresponding bpm (or 'NO_BPM') subdirs
+- another option takens the bpm as one of the resulting entries in a "split"
+
 """
 
 import os
@@ -11,8 +15,13 @@ import re
 import glob
 import argparse 
 import shutil
+import sys
 
 def extract_bpm_from_fname(fname):
+    # Example fname with bpm: InTheAir_Dry_keyFmin_70bpm.wav
+    # regex = re.compile('_[0-9]+bpm\.wav')
+    regex = re.compile('_[0-9.]+bpm\.wav')
+
     found = regex.search(fname)
 
     if found is None:
@@ -24,6 +33,10 @@ def extract_bpm_from_fname(fname):
         tmp2 = '%03.2f' % float(tmp2)
         return tmp2
 
+def extract_bpm_from_fname2(fname):
+    # Example fname: RAJA_155_Drum_Groove_1
+    return fname.split('_')[1]
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Split by bpm into subdirs')
@@ -31,15 +44,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
     target_dir = args.target_dir 
 
-    # Example fname with bpm: InTheAir_Dry_keyFmin_70bpm.wav
-    # regex = re.compile('_[0-9]+bpm\.wav')
-    regex = re.compile('_[0-9.]+bpm\.wav')
-
     for src_full_path in glob.glob(target_dir + '/*.wav'):
 
         fname = os.path.basename(src_full_path) 
 
-        found = extract_bpm_from_fname(fname)
+        # found = extract_bpm_from_fname(fname)
+        found = extract_bpm_from_fname2(fname)
 
         if found is None:
             print(fname, 'NO_BPM')
