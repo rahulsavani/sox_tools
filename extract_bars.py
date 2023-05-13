@@ -31,7 +31,7 @@ def trim(source, dest, bpm, bar_number):
     # remix 1: only take left channel (in case original was stereo
     # norm -0.1: normalise to -0.1 db
     # -b 16: convert to 16 bit if needed
-    cmd_str = 'sox %s -b 16 %s norm -0.1 remix 1 trim 00:00:0%s 00:00:0%s' % (source, dest, start, bl)
+    cmd_str = 'sox %s -r 44100 -b 16 %s norm -0.1 remix 1 trim 00:00:0%s 00:00:0%s' % (source, dest, start, bl)
     print(cmd_str)
     os.system(cmd_str)
 
