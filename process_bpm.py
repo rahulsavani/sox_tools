@@ -49,6 +49,8 @@ def call_sox(name, new_name, speed):
 
 def process_given_bpm(i, name, current_bpm, target_bpm, START_INDEX):
 
+    print(name)
+
     new_name = get_new_name(name)
 
     speed = target_bpm/float(current_bpm)
@@ -67,6 +69,7 @@ def process_given_bpm(i, name, current_bpm, target_bpm, START_INDEX):
 def process_found_length(n_bars, name, i=None):
 
     # new_name = '%03d.wav' % (i+START_INDEX)
+    print(name)
 
     new_name = get_new_name(name)
 
@@ -138,6 +141,7 @@ if __name__ == '__main__':
             print("Processing sdir: %s" % sdir)
             current_bpm = float(sdir)
             for i,name in enumerate(glob.glob('%s/*.wav' % sdir)):
+                print("Processing:", name)
                 START_INDEX = process_given_bpm(i, 
                                                 name, 
                                                 current_bpm, 
